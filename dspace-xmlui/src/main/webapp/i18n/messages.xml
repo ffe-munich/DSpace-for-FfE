@@ -642,6 +642,7 @@
 	<message key="xmlui.Submission.Submissions.workflow_column1"></message>
 	<message key="xmlui.Submission.Submissions.workflow_column2">Task</message>
 	<message key="xmlui.Submission.Submissions.workflow_column3">Item</message>
+	<message key="xmlui.Submission.Submissions.workflow_column3a">Community</message>
 	<message key="xmlui.Submission.Submissions.workflow_column4">Collection</message>
 	<message key="xmlui.Submission.Submissions.workflow_column5">Submitter</message>
 	<message key="xmlui.Submission.Submissions.workflow_submit_return">Return selected tasks to the pool</message>
@@ -661,6 +662,7 @@
 	<message key="xmlui.Submission.Submissions.submit_column1"></message>
 	<message key="xmlui.Submission.Submissions.submit_column2">Title</message>
 	<message key="xmlui.Submission.Submissions.submit_column3">Collection</message>
+	<message key="xmlui.Submission.Submissions.submit_column2a">Community</message>
 	<message key="xmlui.Submission.Submissions.submit_column4">Submitter</message>
 	<message key="xmlui.Submission.Submissions.submit_head3">Authoring:</message>
 	<message key="xmlui.Submission.Submissions.submit_info3">No submissions left unfinished.</message>
@@ -670,6 +672,7 @@
 	<message key="xmlui.Submission.Submissions.progress_head1">Submissions being reviewed</message>
 	<message key="xmlui.Submission.Submissions.progress_info1">These are your completed submissions which are currently being reviewed by collection curators.</message>
 	<message key="xmlui.Submission.Submissions.progress_column1">Title</message>
+	<message key="xmlui.Submission.Submissions.progress_column1a">Community</message>
 	<message key="xmlui.Submission.Submissions.progress_column2">Collection</message>
 	<message key="xmlui.Submission.Submissions.progress_column3">Status</message>
 	<!-- Same transformer, workflow status -->
@@ -687,6 +690,7 @@
         <message key="xmlui.Submission.Submissions.completed.info">These are your completed submissions which have been accepted into DSpace.</message>
         <message key="xmlui.Submission.Submissions.completed.column1">Date accepted</message>
         <message key="xmlui.Submission.Submissions.completed.column2">Title</message>
+		<message key="xmlui.Submission.Submissions.completed.column2a">Community</message>
         <message key="xmlui.Submission.Submissions.completed.column3">Collection</message>
         <message key="xmlui.Submission.Submissions.completed.limit">We've only listed 50 of your archived submissions above. </message>
         <message key="xmlui.Submission.Submissions.completed.displayall">Display all my archived submissions.</message>

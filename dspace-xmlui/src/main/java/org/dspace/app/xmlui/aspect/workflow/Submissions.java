@@ -57,6 +57,8 @@ public class Submissions extends AbstractDSpaceTransformer
         message("xmlui.Submission.Submissions.workflow_column2");
     protected static final Message T_w_column3 =
         message("xmlui.Submission.Submissions.workflow_column3");
+    protected static final Message T_w_column3a_community =
+            message("xmlui.Submission.Submissions.workflow_column3a");
     protected static final Message T_w_column4 =
         message("xmlui.Submission.Submissions.workflow_column4");
     protected static final Message T_w_column5 =
@@ -79,6 +81,8 @@ public class Submissions extends AbstractDSpaceTransformer
         message("xmlui.Submission.Submissions.progress_info1");
     protected static final Message T_p_column1 =
         message("xmlui.Submission.Submissions.progress_column1");
+    protected static final Message T_p_column1a_community =
+            message("xmlui.Submission.Submissions.progress_column1a");
     protected static final Message T_p_column2 =
         message("xmlui.Submission.Submissions.progress_column2");
     protected static final Message T_p_column3 =
@@ -163,12 +167,13 @@ public class Submissions extends AbstractDSpaceTransformer
     	workflow.addPara(T_w_info1);
 
     	// Tasks you own
-    	Table table = workflow.addTable("workflow-tasks",ownedItems.size() + 2,5);
+    	Table table = workflow.addTable("workflow-tasks",ownedItems.size() + 2,6);
         table.setHead(T_w_head2);
         Row header = table.addRow(Row.ROLE_HEADER);
         header.addCellContent(T_w_column1);
         header.addCellContent(T_w_column2);
         header.addCellContent(T_w_column3);
+        header.addCellContent(T_w_column3a_community);
         header.addCellContent(T_w_column4);
         header.addCellContent(T_w_column5);
 
@@ -180,6 +185,7 @@ public class Submissions extends AbstractDSpaceTransformer
         		String collectionUrl = contextPath + "/handle/" + owned.getCollection().getHandle();
         		String ownedWorkflowItemUrl = contextPath + "/handle/" + owned.getCollection().getHandle() + "/workflow?workflowID=" + workflowItemID;
         		String title = owned.getItem().getName();
+                String communityName = owned.getCollection().getCommunities().get(0).getName();
         		String collectionName = owned.getCollection().getName();
         		EPerson submitter = owned.getSubmitter();
         		String submitterName = submitter.getFullName();
@@ -212,6 +218,7 @@ public class Submissions extends AbstractDSpaceTransformer
                 }
 
         		// Submitted too
+                row.addCell().addXref(collectionUrl, communityName);
         		row.addCell().addXref(collectionUrl, collectionName);
 
         		// Submitted by
@@ -221,26 +228,27 @@ public class Submissions extends AbstractDSpaceTransformer
         	}
 
         	Row row = table.addRow();
- 	    	row.addCell(0,5).addButton("submit_return_tasks").setValue(T_w_submit_return);
+ 	    	row.addCell(0,6).addButton("submit_return_tasks").setValue(T_w_submit_return);
 
         }
         else
         {
         	Row row = table.addRow();
-        	row.addCell(0,5).addHighlight("italic").addContent(T_w_info2);
+        	row.addCell(0,6).addHighlight("italic").addContent(T_w_info2);
         }
 
 
 
 
         // Tasks in the pool
-        table = workflow.addTable("workflow-tasks",pooledItems.size()+2,5);
+        table = workflow.addTable("workflow-tasks",pooledItems.size()+2,6);
         table.setHead(T_w_head3);
 
         header = table.addRow(Row.ROLE_HEADER);
         header.addCellContent(T_w_column1);
         header.addCellContent(T_w_column2);
         header.addCellContent(T_w_column3);
+        header.addCellContent(T_w_column3a_community);
         header.addCellContent(T_w_column4);
         header.addCellContent(T_w_column5);
 
@@ -253,6 +261,7 @@ public class Submissions extends AbstractDSpaceTransformer
         		String collectionUrl = contextPath + "/handle/" + pooled.getCollection().getHandle();
         		String pooledItemUrl = contextPath + "/handle/" + pooled.getCollection().getHandle() + "/workflow?workflowID=" + workflowItemID;
         		String title = pooled.getItem().getName();
+                String communityName = pooled.getCollection().getCommunities().get(0).getName();
         		String collectionName = pooled.getCollection().getName();
         		EPerson submitter = pooled.getSubmitter();
         		String submitterName = submitter.getFullName();
@@ -287,6 +296,7 @@ public class Submissions extends AbstractDSpaceTransformer
                 }
 
         		// Submitted too
+                row.addCell().addXref(collectionUrl, communityName);
         		row.addCell().addXref(collectionUrl, collectionName);
 
         		// Submitted by
@@ -296,12 +306,12 @@ public class Submissions extends AbstractDSpaceTransformer
 
         	}
         	Row row = table.addRow();
- 	    	row.addCell(0,5).addButton("submit_take_tasks").setValue(T_w_submit_take);
+ 	    	row.addCell(0,6).addButton("submit_take_tasks").setValue(T_w_submit_take);
         }
         else
         {
         	Row row = table.addRow();
-        	row.addCell(0,5).addHighlight("italic").addContent(T_w_info3);
+        	row.addCell(0,6).addHighlight("italic").addContent(T_w_info3);
         }
     }
 
@@ -342,9 +352,10 @@ public class Submissions extends AbstractDSpaceTransformer
     	inprogress.addPara(T_p_info1);
 
 
-    	Table table = inprogress.addTable("submissions-inprogress",inprogressItems.size()+1,3);
+    	Table table = inprogress.addTable("submissions-inprogress",inprogressItems.size()+1,4);
         Row header = table.addRow(Row.ROLE_HEADER);
         header.addCellContent(T_p_column1);
+        header.addCellContent(T_p_column1a_community);
         header.addCellContent(T_p_column2);
         header.addCellContent(T_p_column3);
 
@@ -352,6 +363,7 @@ public class Submissions extends AbstractDSpaceTransformer
         for (BasicWorkflowItem workflowItem : inprogressItems)
         {
             String title = workflowItem.getItem().getName();
+            String communityName = workflowItem.getCollection().getCommunities().get(0).getName();
             String collectionName = workflowItem.getCollection().getName();
             Message state = getWorkflowStateMessage(workflowItem);
 
@@ -373,6 +385,7 @@ public class Submissions extends AbstractDSpaceTransformer
                 row.addCellContent(T_untitled);
             }
 
+            row.addCellContent(communityName);
             // Collection name column
             row.addCellContent(collectionName);
 

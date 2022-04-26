@@ -75,7 +75,9 @@ public class Submissions extends AbstractDSpaceTransformer
     protected static final Message T_s_column1 = 
         message("xmlui.Submission.Submissions.submit_column1"); 
     protected static final Message T_s_column2 = 
-        message("xmlui.Submission.Submissions.submit_column2"); 
+        message("xmlui.Submission.Submissions.submit_column2");
+    protected static final Message T_s_column2a_community =
+            message("xmlui.Submission.Submissions.submit_column2a");
     protected static final Message T_s_column3 = 
         message("xmlui.Submission.Submissions.submit_column3"); 
     protected static final Message T_s_column4 = 
@@ -98,6 +100,8 @@ public class Submissions extends AbstractDSpaceTransformer
             message("xmlui.Submission.Submissions.completed.column1");
     protected static final Message T_c_column2 =
             message("xmlui.Submission.Submissions.completed.column2");
+    protected static final Message T_c_column2a_community =
+            message("xmlui.Submission.Submissions.completed.column2a");
     protected static final Message T_c_column3 =
             message("xmlui.Submission.Submissions.completed.column3");
     protected static final Message T_c_limit =
@@ -215,17 +219,18 @@ public class Submissions extends AbstractDSpaceTransformer
             rows++; // Supervising heading row
         }
 
-    	Table table = unfinished.addTable("unfinished-submissions",rows,5);
+    	Table table = unfinished.addTable("unfinished-submissions",rows,6);
         Row header = table.addRow(Row.ROLE_HEADER);
         header.addCellContent(T_s_column1);
         header.addCellContent(T_s_column2);
+        header.addCellContent(T_s_column2a_community);
         header.addCellContent(T_s_column3);
         header.addCellContent(T_s_column4);
 
         if (supervisedItems.size() > 0 && unfinishedItems.size() > 0)
         {
             header = table.addRow();
-            header.addCell(null,Cell.ROLE_HEADER,0,5,null).addContent(T_s_head3);
+            header.addCell(null,Cell.ROLE_HEADER,0,6,null).addContent(T_s_head3);
         }
 
         if (unfinishedItems.size() > 0)
@@ -240,6 +245,7 @@ public class Submissions extends AbstractDSpaceTransformer
                 String submitterName = submitterEPerson.getFullName();
                 String submitterEmail = submitterEPerson.getEmail();
                 String collectionName = workspaceItem.getCollection().getName();
+                String communityName = workspaceItem.getCollection().getCommunities().get(0).getName();  //"test";
 
                 Row row = table.addRow(Row.ROLE_DATA);
                 CheckBox remove = row.addCell().addCheckBox("workspaceID");
@@ -254,6 +260,7 @@ public class Submissions extends AbstractDSpaceTransformer
                 }
                 else
                     row.addCell().addXref(url,T_untitled);
+                row.addCell().addXref(url,communityName);
                 row.addCell().addXref(url,collectionName);
                 Cell cell = row.addCell();
                 cell.addContent(T_email);
@@ -263,13 +270,13 @@ public class Submissions extends AbstractDSpaceTransformer
         else
         {
             header = table.addRow();
-            header.addCell(0,5).addHighlight("italic").addContent(T_s_info3);
+            header.addCell(0,6).addHighlight("italic").addContent(T_s_info3);
         }
 
         if (supervisedItems.size() > 0)
         {
             header = table.addRow();
-            header.addCell(null,Cell.ROLE_HEADER,0,5,null).addContent(T_s_head4);
+            header.addCell(null,Cell.ROLE_HEADER,0,6,null).addContent(T_s_head4);
         }
 
         for (WorkspaceItem workspaceItem : supervisedItems) 
@@ -370,10 +377,11 @@ public class Submissions extends AbstractDSpaceTransformer
         completedSubmissions.addPara(T_c_info);
 
         // Create table, headers
-        Table table = completedSubmissions.addTable("completed-submissions",subList.size() + 2,3);
+        Table table = completedSubmissions.addTable("completed-submissions",subList.size() + 2,4);
         Row header = table.addRow(Row.ROLE_HEADER);
         header.addCellContent(T_c_column1); // ISSUE DATE
         header.addCellContent(T_c_column2); // ITEM TITLE (LINKED)
+        header.addCellContent(T_c_column2a_community); // community NAME (LINKED)
         header.addCellContent(T_c_column3); // COLLECTION NAME (LINKED)
 
         //Limit to showing just 50 archived submissions, unless overridden
@@ -394,6 +402,7 @@ public class Submissions extends AbstractDSpaceTransformer
             String collUrl = contextPath+"/handle/"+published.getOwningCollection().getHandle();
             String itemUrl = contextPath+"/handle/"+published.getHandle();
             java.util.List<MetadataValue> titles = itemService.getMetadata(published, "dc", "title", null, Item.ANY);
+            String communityName = published.getOwningCollection().getCommunities().get(0).getName();
             String collectionName = published.getOwningCollection().getName();
             java.util.List<MetadataValue> ingestDate = itemService.getMetadata(published, "dc", "date", "accessioned", Item.ANY);
 
@@ -422,6 +431,7 @@ public class Submissions extends AbstractDSpaceTransformer
             else
                 row.addCell().addXref(itemUrl,T_untitled);
 
+            row.addCell().addXref(collUrl,communityName);
             // Owning Collection
             row.addCell().addXref(collUrl,collectionName);
         }//end while
