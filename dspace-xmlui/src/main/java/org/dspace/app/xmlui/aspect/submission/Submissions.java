@@ -355,7 +355,7 @@ public class Submissions extends AbstractDSpaceTransformer
             limit = -1;
         } else {
             //Set a default limit of 50
-            limit = 50;
+            limit = 10;  // 50;
         }
         Iterator<Item> subs = itemService.findBySubmitterDateSorted(context, context.getCurrentUser(), limit);
 
